@@ -1,0 +1,40 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-1 text-center">
+  <div></div>
+  <div class="p-2 mt-1 w-full md:shadow-lg md:rounded-md md:border md:mt-6 ">
+    <div id="bg1" class="p-2 my-2 mt-2 rounded-md text-white font-bold">
+      Search The Movie
+    </div>
+    <form method="post" action="search">
+      <div class="p-2 my-2 flex">
+        <label
+          id="bg2"
+          class="w-20 bg-red-400 mx-1 p-2 rounded-md text-white font-extrabold"
+          >URL :
+        </label>
+        <input
+          class="flex-1 p-2 rounded-md mx-1 border focus:outline-none"
+          type="text"
+          name="url"
+          placeholder="Enter Your Url"
+          autocomplete="off"
+        />
+      </div>
+      <div class="p-2 flex">
+        <input
+          id="bg3"
+          type="submit"
+          class="p-2 w-full rounded-md text-white focus:outline-none hover:font-extrabold"
+        />
+      </div>
+      <% if (error) { %>
+      <div
+        class="text-center p-2 mt-2 rounded-md text-white font-extrabold"
+        id="bg4"
+      >
+        <%= error %>
+      </div>
+      <% } %>
+    </form>
+  </div>
+  <div></div>
+</div>
