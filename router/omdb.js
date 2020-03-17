@@ -2,12 +2,15 @@ const express = require("express");
 const route = express.Router();
 const axios = require("axios");
 require("dotenv").config();
-const API_KEY = process.env.API_KEY;
 const con = require("../model/db");
+const color = require("colors")
+
+// It is present in .env file.
+const API_KEY = process.env.API_KEY;
 
 con.connect(err => {
-  if (err) throw err;
-  console.log("Connected!");
+  if (err) throw err.message;
+  console.log(color.bgYellow.black("Connected To MySQL!"));
 });
 
 // Index Route
@@ -24,7 +27,16 @@ route.post("/search", (req, res) => {
     var imdbID = req.body.url;
     var id = imdbID.split("/");
     imdbID = id[id.length - 2];
-    res.redirect(`/search/${imdbID}`);
+
+    // Validating
+    if (imdbID.length === 9) {
+      res.redirect(`/search/${imdbID}`);
+    } else {
+      res.render("index", {
+        title: "IMDB",
+        error: "URL Is Invaild!"
+      });
+    }
   } else {
     res.render("index", {
       title: "IMDB",
@@ -49,6 +61,7 @@ route.get("/search/:id", async (req, res) => {
           Stars: data.Actors,
           Rating: data.Ratings
         };
+
         API.Rating = JSON.stringify(API.Rating);
 
         var sql =
@@ -65,7 +78,7 @@ route.get("/search/:id", async (req, res) => {
             API.Rating
           ],
           (err, result) => {
-            if (err) throw err;
+            if (err) throw err.message;
             console.log("Number of records inserted: " + result.affectedRows);
           }
         );

@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 require("dotenv").config();
 
+// It is present in .env file.
 const con = mysql.createConnection({
   host: process.env.HOST,
   user: process.env.USER,
